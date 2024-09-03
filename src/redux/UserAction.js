@@ -24,16 +24,38 @@ export const addUser = (user) =>async (dispatch)=> {
       }
 };
 
-export const deleteUSer = (id) => {
-  return {
-    type: DELETE_USER,
-    payload: id,
-  };
+export const deleteUSer = (id) => async (dispatch)=>  {
+
+    try {
+        let res = await axios.delete(`http://localhost:3000/users/${id}`)
+        dispatch({ type: DELETE_USER, payload: id });
+        console.log(res.data);
+        
+    } catch (error) {
+        
+    }
+
+//   return {
+//     type: DELETE_USER,
+//     payload: id,
+//   };
 };
 
-export const updateUser = (user) => {
-  return {
-    type: UPDATE_USER,
-    payload: user,
-  };
+export const updateUser = (user) => async (dispatch) =>  {
+    try {
+        let res =await axios.patch(`http://localhost:3000/users/${user.id}`,user)
+        console.log(res.data);
+        
+        dispatch({
+            type:UPDATE_USER,
+            payload: user,
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+//   return {
+//     type: UPDATE_USER,
+//     payload: user,
+//   };
 };
